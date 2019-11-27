@@ -6,6 +6,8 @@ import org.apache.curator.framework.recipes.cache.NodeCache;
 import org.apache.curator.framework.recipes.cache.NodeCacheListener;
 import org.apache.curator.retry.RetryNTimes;
 import org.apache.zookeeper.CreateMode;
+import org.apache.zookeeper.WatchedEvent;
+import org.apache.zookeeper.Watcher;
 
 /**
  * curator的zookeeper客户端测试
@@ -27,7 +29,7 @@ public class CuratorClientTest {
             client.create().withMode(CreateMode.EPHEMERAL).forPath("/data", "1".getBytes());
 
             /*
-             * 再上一步创建完节点后，我们要获取节点，并对该节点注册监听
+             * 再上一步创建完节点后，我们要获取节点，并对该节点注册监听，curator的watch机制。
              * NodeCache 顾名思义，是一个节点的缓存对象，start之后才真正开启一个节点缓存
              * getListenable获取一个监听器容器集合，往里面添加一个监听器addListener
              */
@@ -54,6 +56,15 @@ public class CuratorClientTest {
             });
 
 
+            // 使用和zookeeper自带的客户端一样的watch机制
+            client.getData().usingWatcher(new Watcher() {
+                @Override
+                public void process(WatchedEvent event) {
+                    System.out.println("数据改变，和zookeeper自带的客户端一样的功能。");
+                }
+            }).forPath("/data");
+
+            
             // 阻止线程中断
             System.in.read();
 
