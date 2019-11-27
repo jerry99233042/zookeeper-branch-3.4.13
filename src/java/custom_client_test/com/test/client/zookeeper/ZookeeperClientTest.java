@@ -1,8 +1,6 @@
 package com.test.client.zookeeper;
 
 import org.apache.zookeeper.KeeperException;
-import org.apache.zookeeper.WatchedEvent;
-import org.apache.zookeeper.Watcher;
 import org.apache.zookeeper.ZooKeeper;
 import org.apache.zookeeper.data.Stat;
 
@@ -23,12 +21,8 @@ public class ZookeeperClientTest {
             Stat stat = new Stat();
 
             try {
-                client.getData("/zookeeper", new Watcher() {
-                    @Override
-                    public void process(WatchedEvent event) {
-                        System.out.println("数据被改变");
-                    }
-                }, stat);
+                //
+                client.getData("/zookeeper", event -> System.out.println("数据被改变"), stat);
             } catch (KeeperException e) {
                 e.printStackTrace();
             } catch (InterruptedException e) {
