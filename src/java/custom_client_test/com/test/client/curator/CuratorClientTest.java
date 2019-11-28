@@ -16,9 +16,9 @@ public class CuratorClientTest {
 
     public static void main(String[] args) {
 
-        // RetryNTimes参数为客户端连接服务端心跳重试策略，重试三次，每次间隔一秒
+        // RetryNTimes参数为客户端连接服务端心跳重试策略，如果网络问题连接不上server，重试三次，每次间隔三秒
         CuratorFramework client = CuratorFrameworkFactory
-                .newClient("192.168.1.156:2181", new RetryNTimes(3, 1000));
+                .newClient("192.168.1.156:2181", new RetryNTimes(3, 3000));
 
         // start才真正开启一个客户端
         client.start();
@@ -64,7 +64,7 @@ public class CuratorClientTest {
                 }
             }).forPath("/data");
 
-            
+
             // 阻止线程中断
             System.in.read();
 
