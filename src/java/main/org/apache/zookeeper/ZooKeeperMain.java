@@ -278,12 +278,22 @@ public class ZooKeeperMain {
             zk.close();
         }
         host = newHost;
+        // zk的readonly模式，暂不了解 TODO
         boolean readOnly = cl.getOption("readonly") != null;
+        // 其实这就是new了一个zk原生的客户端实例，跟我之前在com.test.client.zookeeper.ZookeeperClientTest一样
         zk = new ZooKeeper(host,
                  Integer.parseInt(cl.getOption("timeout")),
                  new MyWatcher(), readOnly);
     }
-    
+
+    /**
+     * zkCli脚本的的入口方法，通过zkCli脚本可以看到，
+     * 其实就是运行了这个文件的main方法
+     * @param args
+     * @throws KeeperException
+     * @throws IOException
+     * @throws InterruptedException
+     */
     public static void main(String args[])
         throws KeeperException, IOException, InterruptedException
     {
@@ -294,6 +304,7 @@ public class ZooKeeperMain {
     public ZooKeeperMain(String args[]) throws IOException, InterruptedException {
         cl.parseOptions(args);
         System.out.println("Connecting to " + cl.getOption("server"));
+        // 连接到zk server，获取执行zkCli.sh后面的参数-server的值
         connectToZK(cl.getOption("server"));
         //zk = new ZooKeeper(cl.getOption("server"),
 //                Integer.parseInt(cl.getOption("timeout")), new MyWatcher());

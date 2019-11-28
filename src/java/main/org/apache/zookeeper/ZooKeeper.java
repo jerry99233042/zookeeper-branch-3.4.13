@@ -359,6 +359,11 @@ public class ZooKeeper {
      * all paths relative to this root (similar to the unix chroot command).
      *
      * @param connectString
+     *            连接的服务器地址及端口，格式为127.0.0.1:3000,127.0.0.1:3001,127.0.0.1:3002
+     *            可以看到，如果是集群，可以用逗号分隔，这里是去随机连接一台，
+     *            为什么是随机，因为这些地址会被分别封装到一个类中，并存放入一个集合，
+     *            利用Collections的打乱shuffle（中文：洗牌）函数，把该集合打乱，所以造成随机性。
+     *            如果随机一台连不上去，则连接另外的，不是一次连接集群中的所有zk server。
      *            comma separated host:port pairs, each corresponding to a zk
      *            server. e.g. "127.0.0.1:3000,127.0.0.1:3001,127.0.0.1:3002" If
      *            the optional chroot suffix is used the example would look
