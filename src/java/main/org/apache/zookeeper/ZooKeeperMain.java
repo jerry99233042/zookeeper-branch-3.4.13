@@ -289,7 +289,7 @@ public class ZooKeeperMain {
     /**
      * zkCli脚本的的入口方法，通过zkCli脚本可以看到，
      * 其实就是运行了这个文件的main方法
-     * @param args
+     * @param args 改参数就是封装的zkCli.sh 命令后面跟的参数列表，比如-server
      * @throws KeeperException
      * @throws IOException
      * @throws InterruptedException
