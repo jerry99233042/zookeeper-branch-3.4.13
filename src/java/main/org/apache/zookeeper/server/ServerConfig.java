@@ -30,6 +30,7 @@ import org.apache.zookeeper.server.quorum.QuorumPeerConfig.ConfigException;
  *
  * We use this instead of Properties as it's typed.
  *
+ * 这是zoo.cfg的配置类，是单机版zk的配置，不带有server.myid配置
  */
 @InterfaceAudience.Public
 public class ServerConfig {

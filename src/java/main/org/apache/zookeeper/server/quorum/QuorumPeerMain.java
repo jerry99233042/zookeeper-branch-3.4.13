@@ -73,7 +73,11 @@ public class QuorumPeerMain {
     /**
      * To start the replicated server specify the configuration file name on
      * the command line.
-     * @param args path to the configfile
+     *
+     * 该方法为zkServer.sh的第一步启动类，
+     * 主要做参数验证以及其他工作，比如判断单机还是集群，单机和集群的启动类不一样，真正的启动在后面的类中
+     *
+     * @param args path to the configfile 改参数封装的就是zookeeper的配置文件的路径，比如/conf/zoo.cfg
      */
     public static void main(String[] args) {
         QuorumPeerMain main = new QuorumPeerMain();
@@ -99,6 +103,7 @@ public class QuorumPeerMain {
     protected void initializeAndRun(String[] args)
         throws ConfigException, IOException
     {
+        // 集群配置类，对应zoo.cfg的配置，注意，是带有server.myid的相关配置
         QuorumPeerConfig config = new QuorumPeerConfig();
         if (args.length == 1) {
             config.parse(args[0]);
